@@ -1,0 +1,20 @@
+<html>
+<head>
+
+<script src="https://cdn.firebase.com/js/client/2.4.1/firebase.js"></script>
+<!-- <script type="text/javascript" src="js/scripts.js"></script> -->
+<script src="https://code.jquery.com/jquery-2.2.0.js"></script>
+<script>
+
+	function navigate() { 
+  	var javascriptVariable = localStorage.getItem("uid");
+  	window.location.href = "/SendText.php?uid=" + javascriptVariable; 
+	}
+</script>
+</head>
+<body>
+
+<button id="send" onclick="navigate()">Send message</button>
+
+</body>
+</html>

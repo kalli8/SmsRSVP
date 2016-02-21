@@ -1,0 +1,129 @@
+<html>
+<head>
+<script src="https://cdn.firebase.com/js/client/2.4.1/firebase.js"></script>
+<!-- <script type="text/javascript" src="js/scripts.js"></script> -->
+<script src="https://code.jquery.com/jquery-2.2.0.js"></script>
+<script>
+
+$(document).ready(function() {
+
+
+ var ref = new Firebase('https://smsrsvp.firebaseio.com/');
+  var userRef; 
+  
+  $("#signup").click(function() {
+  
+	ref.authAnonymously(function(error, authData) {
+  if (error) {
+    console.log("Login Failed!", error);
+  } else {
+    console.log("Authenticated successfully with payload:", authData);
+   	uid = authData.uid;
+   	
+   	userRef = new Firebase('https://smsrsvp.firebaseio.com/' + uid);
+   	alert(userRef);
+   	ref.child(uid).set({
+	   	phoneNumber: $('#phoneNumber').val(),
+	   	groupName: $('#groupName').val(),
+   	});
+  }
+});
+
+
+$("#subscriberButton").click(function() {
+
+alert(userRef);
+userRef.child('/subscriber').push({
+	   	phoneNumber: $('#phone').val(),
+	   	name: $('#name').val(),
+   	});
+   	$('#phone').val('');
+   	$('#name').val('');   	
+
+});
+
+
+$("#messageSubmit").click(function() {
+
+	userRef.child('/message').set({
+	   	message: $('#message').val(),
+	   	
+   	});
+   userRef.child('/messageOptions').push({
+	   	option1: $('#option1').val(),
+	   	option2: $('#option2').val(),	   	
+	   	option3: $('#option3').val()
+   	});   	
+});
+
+
+var repliesRef = new Firebase(userRef + '/Replies');
+var messageOptionsRef = new Firebase(userRef + '/Replies');
+
+
+
+
+
+});
+
+
+
+});
+
+
+
+
+</script>
+
+</head>
+<body>
+<!-- 
+<script> // needs to be in the top of the BODY of the page where facebook authentication is
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '1561068620877803',
+      xfbml      : true,
+      version    : 'v2.5'
+    });
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+</script>
+ -->
+
+<!-- 
+<input type="text" id="username">
+<input type="text" id="email">
+ -->
+<input type="text" id="phoneNumber">
+<input type="text" id="groupName">
+<button id="signup"></button>
+
+
+<input type="text" id="name">
+<input type="text" id="phone">
+<button id="subscriberButton"></button>
+
+
+<input type="text" id="message">
+<input type="text" id="option1">
+<input type="text" id="option2">
+<input type="text" id="option3">
+<button id="messageSubmit"></button>
+
+
+
+
+
+
+
+
+
+</body>
+</html>

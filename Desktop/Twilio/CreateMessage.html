@@ -1,0 +1,41 @@
+<html>
+<head>
+<script src="https://cdn.firebase.com/js/client/2.4.1/firebase.js"></script>
+<!-- <script type="text/javascript" src="js/scripts.js"></script> -->
+<script src="https://code.jquery.com/jquery-2.2.0.js"></script>
+<script>
+
+$(document).ready(function() {
+
+ var ref = new Firebase('https://smsrsvp.firebaseio.com/');
+ var uid = localStorage.getItem("uid");
+
+$("#messageSubmit").click(function() {
+	alert(uid);
+	ref.child(uid + '/message').set({
+	   	body: $('#message').val(),
+	    option1: $('#option1').val(),
+	   	option2: $('#option2').val(),	   	
+	   	option3: $('#option3').val()
+   	});
+   		window.location.href = "/response.html";
+});
+
+});
+
+
+
+</script>
+
+</head>
+<body>
+
+<input type="text" id="message" placeholder="message">
+<input type="text" id="option1" placeholder="option1">
+<input type="text" id="option2" placeholder="option2">
+<input type="text" id="option3" placeholder="option3">
+<button id="messageSubmit"></button>
+
+
+</body>
+</html>
